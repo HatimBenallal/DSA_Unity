@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2858767383096099371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2858767383096099370}
+  - component: {fileID: 2858767383096099368}
+  - component: {fileID: 2858767383096099369}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2858767383096099370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858767383096099371}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2858767383096099368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858767383096099371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53ea99c6ab278a748a515f9318c5434d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardScript: {fileID: 0}
+--- !u!114 &2858767383096099369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858767383096099371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2ba15caa5948549a07a0529a72b6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  columns: 8
+  rows: 8
+  wallCount:
+    minimum: 5
+    maximum: 9
+  lifeCount:
+    minimum: 1
+    maximum: 5
+  coinsCount:
+    minimum: 1
+    maximum: 5
+  exit: {fileID: 4505086894086609303, guid: 5f8119e7a0619ab448002992253d1d8b, type: 3}
+  floorTiles:
+  - {fileID: 6630903269623833355, guid: 64880b5350231f04d8a9d19de70323b6, type: 3}
+  - {fileID: 3602985136540663611, guid: cb8cae40ca84f57438aadc19b63dd004, type: 3}
+  - {fileID: 1393043926140952666, guid: f8b60b8a2bf422048a32e5a504c0c93c, type: 3}
+  wallTiles:
+  - {fileID: 2924692837099748748, guid: d81252d9b0810684ba20b5610d2f329a, type: 3}
+  - {fileID: 381279706269331503, guid: 726b1b595468ca84c849a082ac68667d, type: 3}
+  - {fileID: 6827076458008726716, guid: 4c9ee593c6f1e2748887c47115dbe67b, type: 3}
+  - {fileID: 5456660892998996930, guid: e3a86a544e52b8246bbabe298c1dcc22, type: 3}
+  lifeTiles:
+  - {fileID: 6250633135710756624, guid: e3f9336a3d3a638489f5e4ea71a21bdf, type: 3}
+  coinsTiles:
+  - {fileID: 6428536073286356523, guid: d2dc11f0c3bc050419f5723a180e3513, type: 3}
+  enemyTiles:
+  - {fileID: 9187920194453700910, guid: 63707a8c77fff704791714fca6531ed5, type: 3}
+  - {fileID: 5845903173468351262, guid: 26bac3e69e91a4f4fa431afabdb32aaa, type: 3}
+  outerWallTiles:
+  - {fileID: 8652659051862488630, guid: 00fd3269954f4fe4a91765fee34eff4b, type: 3}
+  - {fileID: 6611289191500686941, guid: 96491842f5f89114aae81f9c9a68d08d, type: 3}
+  - {fileID: 2787196639921847400, guid: 60118a53ace46ea41b649e0ef514dba3, type: 3}
