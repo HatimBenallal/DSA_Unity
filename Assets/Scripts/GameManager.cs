@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     //Current level number, expressed in game as "Day  1".
     private Text levelText;
     private GameObject levelImage;
-    private int level = 1;
+    private int level = 3;
     public List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
