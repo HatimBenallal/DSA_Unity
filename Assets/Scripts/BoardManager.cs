@@ -40,6 +40,8 @@ public class BoardManager : MonoBehaviour
     public GameObject[] coinsTiles;      //Array of life prefabs.
     public GameObject[] enemyTiles;     //Array of enemy prefabs.
     public GameObject[] outerWallTiles; //Array of outer tile prefabs.
+    public List<Enemy> enemies;
+    
 
     //A variable to store a reference to the transform of our Board object.
     private Transform boardHolder;
@@ -151,12 +153,36 @@ public class BoardManager : MonoBehaviour
         LayoutObjectAtRandom (coinsTiles, coinsCount.minimum, coinsCount.maximum);
 
         //Determine number of enemies based on current level number, based on a logarithmic progression
-        int enemyCount = (int)Mathf.Log(level, 2f);
+        int enemyCount = 0;
+        if (level==1){
+            enemyCount = 2;
+        }
+        if (level==2){
+            enemyCount = 3;
+        }
+        if (level==3){
+            enemyCount = 4;
+        }
+        if (level==4){
+            enemyCount = 6;
+        }
+        if (level==5){
+            enemyCount = 6;
+        }
+        if (level==6){
+            enemyCount = 7;
+        }
+        
 
         //Instantiate a random number of enemies based on minimum and maximum, at randomized positions.
         LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
 
         //Instantiate the exit tile in the upper right hand corner of our game board
+        Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+        
+    }
+
+    public void Exit(){
         Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
     }
 }

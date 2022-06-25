@@ -11,7 +11,7 @@ public class Enemy : MovingObject
     private bool skipMove;
     public Sprite dmgSprite;
     public int vidaenemy;
-
+    
     // Start is called before the first frame update
     protected override void Start ()
     {
@@ -45,8 +45,9 @@ public class Enemy : MovingObject
             yDir = target.position.y > transform.position.y ? 1 : -1;
 
         //If the difference in positions is not approximately zero (Epsilon) do the following:
-        else
+        //if (Mathf.Abs (target.position.y - transform.position.y) < float.Epsilon)
             //Check if target x position is greater than enemy's x position, if so set x direction to 1 (move right), if not set to -1 (move left).
+        else    
             xDir = target.position.x > transform.position.x ? 1 : -1;
 
         //Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
@@ -55,18 +56,26 @@ public class Enemy : MovingObject
 
     protected override void OnCantMove <T> (T component)
     {
-        Player hitPlayer = component as Player;
-        animator.SetTrigger("enemyAttack");
-        hitPlayer.Loselife(playerDamage);
+        if (atack!=false){
+            Player hitPlayer = component as Player;
+            animator.SetTrigger("enemyAttack");
+            hitPlayer.Loselife(playerDamage);
+        }
     }
+    
+    private bool atack=true; 
 
     public void DamageEnemy (int loss)
     {
         vidaenemy -= loss;
         if  (vidaenemy<=loss)
         {
+            GameManager.instance.RemoveEnemies(this);
             gameObject.SetActive(false);
+            atack=false;
+            
         }
+        
     }
 }
 

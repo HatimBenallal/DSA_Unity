@@ -19,10 +19,11 @@ public class GameManager : MonoBehaviour
     //Current level number, expressed in game as "Day  1".
     private Text levelText;
     private GameObject levelImage;
-    private int level = 3;
+    private int level = 1;
     public List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
+    private int cont;
 
     //Awake is always called before any Start functions
     void Awake()
@@ -89,6 +90,23 @@ public class GameManager : MonoBehaviour
         enemies.Add (script);
     }
 
+
+    public void RemoveEnemies(Enemy script){
+        // while (comprob == false){
+        //     cont = enemies.Count;
+        //     comprob = true;
+        // }
+        enemies.Remove (script);
+        //
+        
+        boardScript.Exit();
+        //cont = cont -1;
+        // if (enemies == null)
+        // {
+        //     boardScript.Exit();
+        // }
+    }
+
     IEnumerator MoveEnemies()
     {
         enemiesMoving = true;
@@ -102,7 +120,7 @@ public class GameManager : MonoBehaviour
             enemies[i].MoveEnemy();
             yield return new WaitForSeconds(enemies[i].moveTime);
         }
-
+        
         playersTurn = true;
         enemiesMoving = false;
     }

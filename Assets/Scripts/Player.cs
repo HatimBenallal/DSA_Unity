@@ -25,8 +25,9 @@ public class Player : MovingObject
     private Animator animator;
     //Used to store player life points total during level.
     private int life;
-    public int coins;
+    private int coins;
     private Vector2 touchOrigin = -Vector2.one;
+    public List<Enemy> enemies;
 
     
     //Start overrides the Start function of MovingObject
@@ -152,6 +153,11 @@ public class Player : MovingObject
             Enemy hitEnemy = component as Enemy;
 
             hitEnemy.DamageEnemy (enemyDamage);
+            // if (hitEnemy.DamageEnemy(enemyDamage) == true){
+            //     //GameManager gm = component as GameManager;
+            //     GameManager.RemoveEnemies();
+            // }
+
         
             animator.SetTrigger("playerChop");
         }        
@@ -171,7 +177,7 @@ public class Player : MovingObject
         }
 
         //Check if the tag of the trigger collided with is life.
-        else if(other.tag == "life")
+        else if(other.tag == "Life")
         {
             //Add pointsPerlife to the players current life total.
             life += pointsPerLife;
@@ -182,7 +188,7 @@ public class Player : MovingObject
         }
 
         //Check if the tag of the trigger collided with is coins.
-        else if(other.tag == "coins")
+        else if(other.tag == "Coins")
         {
             //Add pointsPercoins to players life points total
             coins += pointsPerCoins;
