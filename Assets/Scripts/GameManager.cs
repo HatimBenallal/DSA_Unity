@@ -107,10 +107,7 @@ public class GameManager : MonoBehaviour
 
 
     public void RemoveEnemies(Enemy script){
-        // while (comprob == false){
-        //     cont = enemies.Count;
-        //     comprob = true;
-        // }
+        
         
         enemies.Remove (script);
 
