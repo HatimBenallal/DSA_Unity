@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int playerLifePoints = 100;
     public int playerCoinsPoints = 0;
     public int playerkills = 0;
+    public float time = 0;
     [HideInInspector] public bool playersTurn = true;
     
     //Current level number, expressed in game as "Day  1".
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     private int kill = 1;
     public Text killText;
     public Text coinsText;
+
 
 
     //Awake is always called before any Start functions
@@ -95,6 +97,7 @@ public class GameManager : MonoBehaviour
         if (playersTurn || enemiesMoving || doingSetup)
             return;
         StartCoroutine(MoveEnemies());
+
     }
 
     public void AddEnemyToList(Enemy script)
@@ -116,7 +119,7 @@ public class GameManager : MonoBehaviour
         killText.text =  "kills: " + playerkills;
         GameManager.instance.playerkills = playerkills;
         
-        playerCoinsPoints = GameManager.instance.playerCoinsPoints;
+        //playerCoinsPoints = GameManager.instance.playerCoinsPoints;
         playerCoinsPoints += 5;
         coinsText = GameObject.Find("coinsText").GetComponent<Text>();
         coinsText.text = " coins: " + playerCoinsPoints;

@@ -50,8 +50,12 @@ MonoBehaviour:
   boardScript: {fileID: 0}
   playerLifePoints: 100
   playerCoinsPoints: 0
+  playerkills: 0
   playersTurn: 1
+  levelText: {fileID: 0}
   enemies: []
+  killText: {fileID: 0}
+  coinsText: {fileID: 0}
 --- !u!114 &2858767383096099369
 MonoBehaviour:
   m_ObjectHideFlags: 0
