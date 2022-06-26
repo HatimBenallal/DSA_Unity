@@ -178,11 +178,11 @@ public class BoardManager : MonoBehaviour
         LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
 
         //Instantiate the exit tile in the upper right hand corner of our game board
-        Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+        //Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0F), Quaternion.identity);
         
     }
 
-    public void Exit(){
+    public void Exxit(){
         Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
     }
 }

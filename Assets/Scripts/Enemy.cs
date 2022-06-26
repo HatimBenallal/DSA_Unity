@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class Enemy : MovingObject
 {
@@ -11,6 +12,8 @@ public class Enemy : MovingObject
     private bool skipMove;
     public Sprite dmgSprite;
     public int vidaenemy;
+    
+
     
     // Start is called before the first frame update
     protected override void Start ()
@@ -42,13 +45,13 @@ public class Enemy : MovingObject
         if(Mathf.Abs (target.position.x - transform.position.x) < float.Epsilon)
 
             //If the y coordinate of the target's (player) position is greater than the y coordinate of this enemy's position set y direction 1 (to move up). If not, set it to -1 (to move down).
-            yDir = target.position.y > transform.position.y ? 1 : -1;
+            yDir = target.position.y > transform.position.y ? 3 : -3;
 
         //If the difference in positions is not approximately zero (Epsilon) do the following:
         //if (Mathf.Abs (target.position.y - transform.position.y) < float.Epsilon)
             //Check if target x position is greater than enemy's x position, if so set x direction to 1 (move right), if not set to -1 (move left).
         else    
-            xDir = target.position.x > transform.position.x ? 1 : -1;
+            xDir = target.position.x > transform.position.x ? 3 : -3;
 
         //Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
         AttemptMove <Player> (xDir, yDir);
@@ -71,6 +74,7 @@ public class Enemy : MovingObject
         if  (vidaenemy<=loss)
         {
             GameManager.instance.RemoveEnemies(this);
+            
             gameObject.SetActive(false);
             atack=false;
             

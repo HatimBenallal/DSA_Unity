@@ -14,16 +14,21 @@ public class GameManager : MonoBehaviour
     
     public int playerLifePoints = 100;
     public int playerCoinsPoints = 0;
+    public int playerkills = 0;
     [HideInInspector] public bool playersTurn = true;
     
     //Current level number, expressed in game as "Day  1".
-    private Text levelText;
+    public Text levelText;
     private GameObject levelImage;
     private int level = 1;
     public List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
     private int cont;
+    private int kill = 1;
+    public Text killText;
+    public Text coinsText;
+
 
     //Awake is always called before any Start functions
     void Awake()
@@ -61,6 +66,13 @@ public class GameManager : MonoBehaviour
         enemies.Clear();
         //Call the SetupScene function of the BoardManager script, pass it current level number.
         boardScript.SetupScene(level);
+        playerCoinsPoints = GameManager.instance.playerCoinsPoints;
+        playerkills = GameManager.instance.playerkills;
+        coinsText = GameObject.Find("coinsText").GetComponent<Text>();
+        coinsText.text = " coins: " + playerCoinsPoints;
+        killText = GameObject.Find("killText").GetComponent<Text>();
+        killText.text =  "kills: " + playerkills;
+
 
     }
 
@@ -96,15 +108,26 @@ public class GameManager : MonoBehaviour
         //     cont = enemies.Count;
         //     comprob = true;
         // }
-        enemies.Remove (script);
-        //
         
-        boardScript.Exit();
+        enemies.Remove (script);
+
+        playerkills += kill;
+        killText = GameObject.Find("killText").GetComponent<Text>();
+        killText.text =  "kills: " + playerkills;
+        GameManager.instance.playerkills = playerkills;
+        
+        playerCoinsPoints = GameManager.instance.playerCoinsPoints;
+        playerCoinsPoints += 5;
+        coinsText = GameObject.Find("coinsText").GetComponent<Text>();
+        coinsText.text = " coins: " + playerCoinsPoints;
+        GameManager.instance.playerCoinsPoints= playerCoinsPoints;
+
+
         //cont = cont -1;
-        // if (enemies == null)
-        // {
-        //     boardScript.Exit();
-        // }
+        if (enemies.Count == 0)
+        {
+            boardScript.Exxit();
+        }
     }
 
     IEnumerator MoveEnemies()

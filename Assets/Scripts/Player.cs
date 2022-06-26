@@ -26,6 +26,7 @@ public class Player : MovingObject
     //Used to store player life points total during level.
     private int life;
     private int coins;
+
     private Vector2 touchOrigin = -Vector2.one;
     public List<Enemy> enemies;
 
@@ -38,10 +39,10 @@ public class Player : MovingObject
 
         //Get the current life point total stored in GameManager.instance between levels.
         life = GameManager.instance.playerLifePoints;
-        coins = GameManager.instance.playerCoinsPoints;
+        //coins = GameManager.instance.playerCoinsPoints;
 
         lifeText.text = "life: " + life;
-        coinsText.text = "coins; "+coins;
+        //coinsText.text = "coins: "+coins;
 
         //Call the Start function of the MovingObject base class.
         base.Start ();
@@ -53,7 +54,7 @@ public class Player : MovingObject
     {
         //When Player object is disabled, store the current local life total in the GameManager so it can be re-loaded in next level.
         GameManager.instance.playerLifePoints = life;
-        GameManager.instance.playerCoinsPoints = coins;
+        //GameManager.instance.playerCoinsPoints = coins;
     }
 
 
@@ -119,9 +120,7 @@ public class Player : MovingObject
     //AttemptMove takes a generic parameter T which for Player will be of the type Wall, it also takes integers for x and y direction to move in.
     protected override void AttemptMove <T> (int xDir, int yDir)
     {
-        //Every time player moves, subtract from life points total.
-        //life--;
-        lifeText.text = "life: " + life;
+        
 
         //Call the AttemptMove method of the base class, passing in the component T (in this case Wall) and x and y direction to move.
         base.AttemptMove <T> (xDir, yDir);
@@ -153,12 +152,7 @@ public class Player : MovingObject
             Enemy hitEnemy = component as Enemy;
 
             hitEnemy.DamageEnemy (enemyDamage);
-            // if (hitEnemy.DamageEnemy(enemyDamage) == true){
-            //     //GameManager gm = component as GameManager;
-            //     GameManager.RemoveEnemies();
-            // }
 
-        
             animator.SetTrigger("playerChop");
         }        
     }
@@ -191,9 +185,10 @@ public class Player : MovingObject
         else if(other.tag == "Coins")
         {
             //Add pointsPercoins to players life points total
+            coins = GameManager.instance.playerCoinsPoints;
             coins += pointsPerCoins;
             coinsText.text = "+" + pointsPerCoins + " coins: " + coins;
-
+            GameManager.instance.playerCoinsPoints = coins;
             //Disable the coins object the player collided with.
             other.gameObject.SetActive (false);
         }

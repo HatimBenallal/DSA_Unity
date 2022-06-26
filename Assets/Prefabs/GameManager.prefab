@@ -45,7 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ea99c6ab278a748a515f9318c5434d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelStartDelay: 2
+  turnDealy: 0.1
   boardScript: {fileID: 0}
+  playerLifePoints: 100
+  playerCoinsPoints: 0
+  playersTurn: 1
+  enemies: []
 --- !u!114 &2858767383096099369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +75,7 @@ MonoBehaviour:
   coinsCount:
     minimum: 1
     maximum: 5
-  exit: {fileID: 4505086894086609303, guid: 5f8119e7a0619ab448002992253d1d8b, type: 3}
+  exit: {fileID: 449219522587834124, guid: 5f8119e7a0619ab448002992253d1d8b, type: 3}
   floorTiles:
   - {fileID: 6630903269623833355, guid: 64880b5350231f04d8a9d19de70323b6, type: 3}
   - {fileID: 3602985136540663611, guid: cb8cae40ca84f57438aadc19b63dd004, type: 3}
@@ -90,3 +96,4 @@ MonoBehaviour:
   - {fileID: 8652659051862488630, guid: 00fd3269954f4fe4a91765fee34eff4b, type: 3}
   - {fileID: 6611289191500686941, guid: 96491842f5f89114aae81f9c9a68d08d, type: 3}
   - {fileID: 2787196639921847400, guid: 60118a53ace46ea41b649e0ef514dba3, type: 3}
+  enemies: []
