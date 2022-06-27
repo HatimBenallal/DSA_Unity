@@ -40,6 +40,7 @@ public class BoardManager : MonoBehaviour
     public GameObject[] lifeTiles;
     public GameObject[] coinsTiles;      //Array of life prefabs.
     public GameObject[] enemyTiles;     //Array of enemy prefabs.
+    public GameObject[] bossTiles;     //Array of enemy prefabs.
     public GameObject[] outerWallTiles; //Array of outer tile prefabs.
     public List<Enemy> enemies;
     
@@ -172,11 +173,17 @@ public class BoardManager : MonoBehaviour
         }
 
         //Instantiate a random number of life tiles based on minimum and maximum, at randomized positions.
-        if (GameManager.instance.back == false){
+        if (GameManager.instance.back == false && GameManager.instance.scene<5){
             LayoutObjectAtRandom (lifeTiles, 1, 2);
 
             LayoutObjectAtRandom (coinsTiles, coinsCount.minimum, coinsCount.maximum);
             LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
+        }
+        if (GameManager.instance.back == false && GameManager.instance.scene==5){
+            LayoutObjectAtRandom (lifeTiles, 1, 2);
+
+            LayoutObjectAtRandom (coinsTiles, coinsCount.minimum, coinsCount.maximum);
+            LayoutObjectAtRandom (bossTiles, 1,1);
         }
 
         //Determine number of enemies based on current level number, based on a logarithmic progression

@@ -24,7 +24,9 @@ public class GameManager : MonoBehaviour
     private GameObject levelImage;
     private int level = 1;
     public List<Enemy> enemies;
+    public List<Boss> boss;
     private bool enemiesMoving;
+    private bool bossMoving;
     private bool doingSetup;
     private int cont;
     private int kill = 1;
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
     public Text coinsText;
     public int scene = 0;
     public bool back = false;
+    public int damage;
 
 
 
@@ -44,7 +47,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         //Get a component reference to the attached BoardManager script
         DontDestroyOnLoad(gameObject);
-        enemies = new List<Enemy>();
+        if (scene==5){
+            boss= new List<Boss>();
+        }
+        else
+            enemies = new List<Enemy>();
         boardScript = GetComponent<BoardManager>();
 
         //Call the InitGame function to initialize the first level 
@@ -67,18 +74,18 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         
-
-        if (scene == 0){ 
-            doingSetup = true;
-            levelImage = GameObject.Find("LevelImage");
-            levelText = GameObject.Find("LevelText").GetComponent<Text>();
-            levelText.text = "Level " + level;
-            levelImage.SetActive(true);
-            Invoke("HideLevelImage", levelStartDelay);
-        }
+        doingSetup = true;
+        levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        levelText.text = "Level " + level +"\nRoom "+ (scene+1);
+        levelImage.SetActive(true);
+        Invoke("HideLevelImage", levelStartDelay);
+        
+         
         if (back == false)
             enemies.Clear();
         //Call the SetupScene function of the BoardManager script, pass it current level number.
+        
         boardScript.SetupScene(level);
         playerCoinsPoints = GameManager.instance.playerCoinsPoints;
         playerkills = GameManager.instance.playerkills;
@@ -86,22 +93,10 @@ public class GameManager : MonoBehaviour
         coinsText.text = " coins: " + playerCoinsPoints;
         killText = GameObject.Find("killText").GetComponent<Text>();
         killText.text =  "kills: " + playerkills;
+        
     }
 
-    // void ContinueGame()
-    // {
-    //     doingSetup = true;
-
-    //     enemies.Clear();
-    //     //Call the SetupScene function of the BoardManager script, pass it current level number.
-    //     boardScript.SetupScene(level);
-    //     playerCoinsPoints = GameManager.instance.playerCoinsPoints;
-    //     playerkills = GameManager.instance.playerkills;
-    //     coinsText = GameObject.Find("coinsText").GetComponent<Text>();
-    //     coinsText.text = " coins: " + playerCoinsPoints;
-    //     killText = GameObject.Find("killText").GetComponent<Text>();
-    //     killText.text =  "kills: " + playerkills;
-    // }
+    
 
     private void HideLevelImage()
     {
@@ -119,7 +114,7 @@ public class GameManager : MonoBehaviour
     //Update is called every frame.
     void Update()
     {
-        if (playersTurn || enemiesMoving || doingSetup)
+        if (playersTurn || enemiesMoving || doingSetup || bossMoving)
             return;
         StartCoroutine(MoveEnemies());
 
@@ -128,6 +123,11 @@ public class GameManager : MonoBehaviour
     public void AddEnemyToList(Enemy script)
     {
         enemies.Add (script);
+    }
+
+    public void AddBossToList(Boss script)
+    {
+        boss.Add (script);
     }
 
 
@@ -155,11 +155,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RemoveBoss(Boss script){
+        
+        
+        boss.Remove (script);
+
+        playerkills += kill;
+        killText = GameObject.Find("killText").GetComponent<Text>();
+        killText.text =  "kills: " + playerkills;
+        GameManager.instance.playerkills = playerkills;
+        
+        //playerCoinsPoints = GameManager.instance.playerCoinsPoints;
+        playerCoinsPoints += 20;
+        coinsText = GameObject.Find("coinsText").GetComponent<Text>();
+        coinsText.text = " coins: " + playerCoinsPoints;
+        GameManager.instance.playerCoinsPoints= playerCoinsPoints;
+
+
+        //cont = cont -1;
+        if (boss.Count == 0)
+        {
+            boardScript.Exxit();
+        }
+    }
+
     IEnumerator MoveEnemies()
     {
         enemiesMoving = true;
+        bossMoving = true;
         yield return new WaitForSeconds(turnDealy);
-        if (enemies.Count == 0)
+        if (enemies.Count == 0 || boss.Count == 0)
         {
             yield return new WaitForSeconds(turnDealy);
         }
@@ -168,8 +193,14 @@ public class GameManager : MonoBehaviour
             enemies[i].MoveEnemy();
             yield return new WaitForSeconds(enemies[i].moveTime);
         }
+        for (int i=0; i < boss.Count; i++)
+        {
+            boss[i].MoveEnemy();
+            yield return new WaitForSeconds(boss[i].moveTime);
+        }
         
         playersTurn = true;
         enemiesMoving = false;
+        bossMoving = false;
     }
 }

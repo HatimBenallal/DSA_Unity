@@ -56,6 +56,8 @@ public class Player : MovingObject
     {
         //When Player object is disabled, store the current local life total in the GameManager so it can be re-loaded in next level.
         GameManager.instance.playerLifePoints = life;
+        GameManager.instance.damage = enemyDamage;
+
         //GameManager.instance.playerCoinsPoints = coins;
     }
 
@@ -114,6 +116,7 @@ public class Player : MovingObject
             //Pass in horizontal and vertical as parameters to specify the direction to move Player in.
             AttemptMove<Wall> (horizontal, vertical);
             AttemptMove<Enemy> (horizontal, vertical);
+            AttemptMove<Boss> (horizontal, vertical);
         }
         
     }
@@ -156,7 +159,14 @@ public class Player : MovingObject
             hitEnemy.DamageEnemy (enemyDamage);
 
             animator.SetTrigger("playerChop");
-        }        
+        }
+        if (component as Boss){
+            Boss hitEnemy = component as Boss;
+
+            hitEnemy.DamageEnemy (enemyDamage);
+
+            animator.SetTrigger("playerChop");
+        }         
     }
 
     //OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).

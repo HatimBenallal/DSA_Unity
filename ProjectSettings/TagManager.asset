@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Exit
   - Exit1
+  - Boss
   layers:
   - Default
   - TransparentFX

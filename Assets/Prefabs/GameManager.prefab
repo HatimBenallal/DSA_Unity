@@ -55,9 +55,12 @@ MonoBehaviour:
   playersTurn: 1
   levelText: {fileID: 0}
   enemies: []
+  boss: []
   killText: {fileID: 0}
   coinsText: {fileID: 0}
   scene: 0
+  back: 0
+  damage: 0
 --- !u!114 &2858767383096099369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +102,8 @@ MonoBehaviour:
   enemyTiles:
   - {fileID: 9187920194453700910, guid: 63707a8c77fff704791714fca6531ed5, type: 3}
   - {fileID: 5845903173468351262, guid: 26bac3e69e91a4f4fa431afabdb32aaa, type: 3}
+  bossTiles:
+  - {fileID: 2318257106756182401, guid: 37aa0e4066d296744a636dac98fcbfda, type: 3}
   outerWallTiles:
   - {fileID: 8652659051862488630, guid: 00fd3269954f4fe4a91765fee34eff4b, type: 3}
   - {fileID: 6611289191500686941, guid: 96491842f5f89114aae81f9c9a68d08d, type: 3}
