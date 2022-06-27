@@ -8,6 +8,7 @@ TagManager:
   - Coins
   - Enemy
   - Exit
+  - Exit1
   layers:
   - Default
   - TransparentFX

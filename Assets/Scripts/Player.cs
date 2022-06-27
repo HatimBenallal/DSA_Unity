@@ -10,7 +10,7 @@ public class Player : MovingObject
     //Delay time in seconds to restart level.
     public float restartLevelDelay = 1f;
     //Number of points to add to player life points when picking up a life object.
-    public int pointsPerLife = 10;
+    public int pointsPerLife = 5;
     //Number of points to add to player life points whne picking up a coins object.
     public int pointsPerCoins = 2;
     //How much damage a player does to a wall whne chopping it.
@@ -25,7 +25,9 @@ public class Player : MovingObject
     private Animator animator;
     //Used to store player life points total during level.
     private int life;
+    private int maxlife = 100;
     private int coins;
+    private int escene;
 
     private Vector2 touchOrigin = -Vector2.one;
     public List<Enemy> enemies;
@@ -169,12 +171,21 @@ public class Player : MovingObject
             //Disable the player object since level is over.
             enabled = false;
         }
+        else if(other.tag == "Exit1")
+        {
+            //Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
+            Invoke ("Back", restartLevelDelay);
+
+            //Disable the player object since level is over.
+            enabled = false;
+        }
 
         //Check if the tag of the trigger collided with is life.
         else if(other.tag == "Life")
         {
             //Add pointsPerlife to the players current life total.
-            life += pointsPerLife;
+            if (life<maxlife)
+                life += pointsPerLife;
             lifeText.text = "+" + pointsPerLife + " life: " + life;
 
             //Disable the life object the player collided with.
@@ -198,7 +209,32 @@ public class Player : MovingObject
     //Restart reloads the scene when called.
     private void Restart ()
     {
-       SceneManager.LoadScene (0);
+        escene = GameManager.instance.scene;
+        if (escene < 5)
+        {
+            SceneManager.LoadScene(escene+1);
+            GameManager.instance.scene = escene+1;        
+        }
+
+        if (escene == 5){
+            SceneManager.LoadScene(0);
+            GameManager.instance.scene = 0;
+        }
+
+        GameManager.instance.back = false;
+    }
+
+    private void Back ()
+    {
+        escene = GameManager.instance.scene;
+        if (escene > 1)
+        {
+            SceneManager.LoadScene(escene-1);
+            GameManager.instance.scene = escene-1;
+            
+            GameManager.instance.back = true;
+
+        }
     }
 
 

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 //Tells Random to use the Unity Engine random number generator.
 using Random = UnityEngine.Random;
-
+using UnityEngine.SceneManagement;
 
 
 public class BoardManager : MonoBehaviour
@@ -26,14 +26,15 @@ public class BoardManager : MonoBehaviour
     }
 
 
-    public int columns = 8;             //Number of columns in our game board.
-    public int rows = 8;                //Number of rows in our game board.
+    public int columns = 12;             //Number of columns in our game board.
+    public int rows = 12;                //Number of rows in our game board.
     //Lower and upper limit for our random number of walls per level.
     public Count wallCount = new Count (5, 9);
     //Lower and upper limit for our random number of life items per level.
-    public Count lifeCount = new Count (1, 5);
+    public Count lifeCount = new Count (1, 1);
     public Count coinsCount = new Count (1, 5);
     public GameObject exit;             //Prefab to spawn for exit.
+    public GameObject exit1;
     public GameObject[] floorTiles;     //Array of floor prefabs.
     public GameObject[] wallTiles;      //Array of wall prefabs.
     public GameObject[] lifeTiles;
@@ -146,13 +147,6 @@ public class BoardManager : MonoBehaviour
 
         //Instantiate a random number of wall tiles based on minimum and maximum, at randomized positions.
         LayoutObjectAtRandom (wallTiles, wallCount.minimum, wallCount.maximum);
-
-        //Instantiate a random number of life tiles based on minimum and maximum, at randomized positions.
-        LayoutObjectAtRandom (lifeTiles, lifeCount.minimum, lifeCount.maximum);
-
-        LayoutObjectAtRandom (coinsTiles, coinsCount.minimum, coinsCount.maximum);
-
-        //Determine number of enemies based on current level number, based on a logarithmic progression
         int enemyCount = 0;
         if (level==1){
             enemyCount = 2;
@@ -172,17 +166,40 @@ public class BoardManager : MonoBehaviour
         if (level==6){
             enemyCount = 7;
         }
+
+        if (level>6){
+            enemyCount = level + 1;
+        }
+
+        //Instantiate a random number of life tiles based on minimum and maximum, at randomized positions.
+        if (GameManager.instance.back == false){
+            LayoutObjectAtRandom (lifeTiles, 1, 2);
+
+            LayoutObjectAtRandom (coinsTiles, coinsCount.minimum, coinsCount.maximum);
+            LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
+        }
+
+        //Determine number of enemies based on current level number, based on a logarithmic progression
+        
         
 
         //Instantiate a random number of enemies based on minimum and maximum, at randomized positions.
-        LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
+        
 
         //Instantiate the exit tile in the upper right hand corner of our game board
         //Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0F), Quaternion.identity);
-        
+        if (GameManager.instance.scene > 1 && GameManager.instance.scene<6){
+            Instantiate (exit1, new Vector3 (columns/2, 0, 0f), Quaternion.identity);
+        }
+        if (GameManager.instance.back == true){
+            Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+        }
     }
+        
 
     public void Exxit(){
-        Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+        if (GameManager.instance.scene < 6){
+            Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+        }
     }
 }

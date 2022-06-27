@@ -173,4 +173,4 @@ MonoBehaviour:
     m_Bits: 8
   playerDamage: 10
   dmgSprite: {fileID: 0}
-  vidaenemy: 15
+  vidaenemy: 30

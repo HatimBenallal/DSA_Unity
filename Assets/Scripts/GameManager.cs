@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic; 
 using UnityEngine.UI;       //Allows us to use Lists. 
+using UnityEngine.SceneManagement;        //Allows us to use SceneManager
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     private int kill = 1;
     public Text killText;
     public Text coinsText;
+    public int scene = 0;
+    public bool back = false;
 
 
 
@@ -46,26 +49,35 @@ public class GameManager : MonoBehaviour
 
         //Call the InitGame function to initialize the first level 
         InitGame();
+        
     }
 
     void OnLevelWasLoaded (int index)
     {
-        level ++;
-        InitGame();
+        if (scene == 0){
+            level ++;
+            InitGame();            
+        }
+        else
+            InitGame();
+        
     }
 
     //Initializes the game for each level.
     void InitGame()
     {
-        doingSetup = true;
+        
 
-        levelImage = GameObject.Find("LevelImage");
-        levelText = GameObject.Find("LevelText").GetComponent<Text>();
-        levelText.text = "Level " + level;
-        levelImage.SetActive(true);
-        Invoke("HideLevelImage", levelStartDelay);
-
-        enemies.Clear();
+        if (scene == 0){ 
+            doingSetup = true;
+            levelImage = GameObject.Find("LevelImage");
+            levelText = GameObject.Find("LevelText").GetComponent<Text>();
+            levelText.text = "Level " + level;
+            levelImage.SetActive(true);
+            Invoke("HideLevelImage", levelStartDelay);
+        }
+        if (back == false)
+            enemies.Clear();
         //Call the SetupScene function of the BoardManager script, pass it current level number.
         boardScript.SetupScene(level);
         playerCoinsPoints = GameManager.instance.playerCoinsPoints;
@@ -74,9 +86,22 @@ public class GameManager : MonoBehaviour
         coinsText.text = " coins: " + playerCoinsPoints;
         killText = GameObject.Find("killText").GetComponent<Text>();
         killText.text =  "kills: " + playerkills;
-
-
     }
+
+    // void ContinueGame()
+    // {
+    //     doingSetup = true;
+
+    //     enemies.Clear();
+    //     //Call the SetupScene function of the BoardManager script, pass it current level number.
+    //     boardScript.SetupScene(level);
+    //     playerCoinsPoints = GameManager.instance.playerCoinsPoints;
+    //     playerkills = GameManager.instance.playerkills;
+    //     coinsText = GameObject.Find("coinsText").GetComponent<Text>();
+    //     coinsText.text = " coins: " + playerCoinsPoints;
+    //     killText = GameObject.Find("killText").GetComponent<Text>();
+    //     killText.text =  "kills: " + playerkills;
+    // }
 
     private void HideLevelImage()
     {

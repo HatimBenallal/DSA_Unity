@@ -51,11 +51,13 @@ MonoBehaviour:
   playerLifePoints: 100
   playerCoinsPoints: 0
   playerkills: 0
+  time: 0
   playersTurn: 1
   levelText: {fileID: 0}
   enemies: []
   killText: {fileID: 0}
   coinsText: {fileID: 0}
+  scene: 0
 --- !u!114 &2858767383096099369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +82,7 @@ MonoBehaviour:
     minimum: 1
     maximum: 5
   exit: {fileID: 449219522587834124, guid: 5f8119e7a0619ab448002992253d1d8b, type: 3}
+  exit1: {fileID: 9084074742849020507, guid: 969eeeb73eb41c04e81e01cc9c7f8fe8, type: 3}
   floorTiles:
   - {fileID: 6630903269623833355, guid: 64880b5350231f04d8a9d19de70323b6, type: 3}
   - {fileID: 3602985136540663611, guid: cb8cae40ca84f57438aadc19b63dd004, type: 3}
