@@ -26,8 +26,8 @@ public class BoardManager : MonoBehaviour
     }
 
 
-    public int columns = 12;             //Number of columns in our game board.
-    public int rows = 12;                //Number of rows in our game board.
+    public int columns = 10;             //Number of columns in our game board.
+    public int rows = 10;                //Number of rows in our game board.
     //Lower and upper limit for our random number of walls per level.
     public Count wallCount = new Count (5, 9);
     //Lower and upper limit for our random number of life items per level.

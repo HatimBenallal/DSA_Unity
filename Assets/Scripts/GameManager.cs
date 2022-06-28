@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
     //Update is called every frame.
     void Update()
     {
-        if (playersTurn || enemiesMoving || doingSetup || bossMoving)
+        if ( enemiesMoving || doingSetup || bossMoving)
             return;
         StartCoroutine(MoveEnemies());
 
@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(boss[i].moveTime);
         }
         
-        playersTurn = true;
+        //playersTurn = true;
         enemiesMoving = false;
         bossMoving = false;
     }

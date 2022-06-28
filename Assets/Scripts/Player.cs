@@ -32,6 +32,11 @@ public class Player : MovingObject
     private Vector2 touchOrigin = -Vector2.one;
     public List<Enemy> enemies;
 
+    public Joystick joystick;
+    
+    public Button button;
+    
+
     
     //Start overrides the Start function of MovingObject
     protected override void Start ()
@@ -64,51 +69,20 @@ public class Player : MovingObject
 
     void Update ()
     {
-        //If it's not the player's turn, exit the function.
-        if(!GameManager.instance.playersTurn) return;
-
+        joystick = GameObject.Find("Fixed Joystick").GetComponent<Joystick>();
         int horizontal = 0;      //Used to store the horizontal move direction.
         int vertical = 0;        //Used to store the vertical move direction.
-
-        #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER 
-    
-        //Get input from the input manager, round it to an integer and store in horizontal to set x axis move direction
-        horizontal = (int) (Input.GetAxisRaw ("Horizontal"));
-
-        //Get input from the input manager, round it to an integer and store in vertical to set y axis move direction
-        vertical = (int) (Input.GetAxisRaw ("Vertical"));
-
-        //Check if moving horizontally, if so set vertical to zero.
+        float x = joystick.Horizontal;
+        float y = joystick.Vertical;
+        if (Mathf.Abs(x) > Mathf.Abs(y))
+            horizontal = x > 0 ? 1 : -1;
+        else
+            vertical = y > 0 ? 1 : -1;
         if(horizontal != 0)
         {
             vertical = 0;
         }
-    
-    //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone
-        #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
- 
 
-        if (Input.touchCount > 0)
-        {
-            Touch myTouch = Input.touches[0];
-            if (myTouch.phase == TouchPhase.Began)
-            {
-                touchOrigin = myTouch.position;
-            }
-            else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0)
-            {
-                Vector2 touchEnd = myTouch.position;
-                float x = touchEnd.x - touchOrigin.x;
-                float y = touchEnd.y - touchOrigin.y;
-                touchOrigin.x = -1;
-                if (Mathf.Abs(x) > Mathf.Abs(y))
-                    horizontal = x > 0 ? 1 : -1;
-                else
-                    vertical = y > 0 ? 1 : -1;
-            }
-        }
-
-        #endif
         //Check if we have a non-zero value for horizontal or vertical
         if(horizontal != 0 || vertical != 0)
         {
@@ -116,9 +90,8 @@ public class Player : MovingObject
             //Pass in horizontal and vertical as parameters to specify the direction to move Player in.
             AttemptMove<Wall> (horizontal, vertical);
             AttemptMove<Enemy> (horizontal, vertical);
-            AttemptMove<Boss> (horizontal, vertical);
+            AttemptMove<Boss> (horizontal, vertical);        
         }
-        
     }
 
     //AttemptMove overrides the AttemptMove function in the base class MovingObject
@@ -137,36 +110,48 @@ public class Player : MovingObject
         CheckIfGameOver ();
 
         //Set the playersTurn boolean of GameManager to false now that players turn is over.
-        GameManager.instance.playersTurn = false;
+        //GameManager.instance.playersTurn = false;
     }
 
     //OnCantMove overrides the abstract function OnCantMove in MovingObject.
     //It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
     protected override void OnCantMove <T> (T component)
     {
-        if (component as Wall){
+        button = GameObject.Find("Button").GetComponent<Button>();
+        if (component as Wall ){
             //Set hitWall to equal the component passed in as a parameter.
-            
-            Wall hitWall = component as Wall;
+            if (button.OnMouseUp() == true) {
+                Wall hitWall = component as Wall;
 
-            //Call the DamageWall function of the Wall we are hitting.
-            hitWall.DamageWall (wallDamage);
-            animator.SetTrigger("playerChop");
+                //Call the DamageWall function of the Wall we are hitting.
+                
+                hitWall.DamageWall (wallDamage);
+                animator.SetTrigger("playerChop");
+            }
         }
         if (component as Enemy){
-            Enemy hitEnemy = component as Enemy;
+            if (button.OnMouseUp() == true) {
+                Enemy hitEnemy = component as Enemy;
 
-            hitEnemy.DamageEnemy (enemyDamage);
+                hitEnemy.DamageEnemy (enemyDamage);
 
-            animator.SetTrigger("playerChop");
+                animator.SetTrigger("playerChop");
+            }
         }
         if (component as Boss){
-            Boss hitEnemy = component as Boss;
+            if (button.OnMouseUp() == true) {
+                Boss hitEnemy = component as Boss;
 
-            hitEnemy.DamageEnemy (enemyDamage);
+                hitEnemy.DamageEnemy (enemyDamage);
 
-            animator.SetTrigger("playerChop");
+                animator.SetTrigger("playerChop");
+            }
         }         
+    }
+
+    public void attack(){
+        animator.SetTrigger("playerChop");
+
     }
 
     //OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
@@ -196,7 +181,7 @@ public class Player : MovingObject
             //Add pointsPerlife to the players current life total.
             if (life<maxlife)
                 life += pointsPerLife;
-            lifeText.text = "+" + pointsPerLife + " life: " + life;
+                lifeText.text = "+" + pointsPerLife + " life: " + life;
 
             //Disable the life object the player collided with.
             other.gameObject.SetActive (false);
