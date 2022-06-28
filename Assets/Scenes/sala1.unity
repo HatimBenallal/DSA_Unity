@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 48188033}
   - component: {fileID: 48188032}
   - component: {fileID: 48188030}
+  - component: {fileID: 48188035}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -233,7 +234,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 48188033}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 837396449}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: playerChop
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &48188033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +285,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 48188028}
   m_CullTransparentMesh: 1
+--- !u!114 &48188035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48188028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7cb0878cf0729741bbec6d4af115392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &128871857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -610,6 +638,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &837396449 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4121190369574142993, guid: 0773be78b1ce1c140b1a223a01605d33, type: 3}
+  m_PrefabInstance: {fileID: 128871857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1510309876
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +655,7 @@ GameObject:
   - component: {fileID: 1510309879}
   - component: {fileID: 1510309878}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

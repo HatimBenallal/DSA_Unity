@@ -117,35 +117,32 @@ public class Player : MovingObject
     //It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
     protected override void OnCantMove <T> (T component)
     {
-        button = GameObject.Find("Button").GetComponent<Button>();
+        //button = GameObject.Find("Button").GetComponent<Button>();
         if (component as Wall ){
             //Set hitWall to equal the component passed in as a parameter.
-            if (button.OnMouseUp() == true) {
                 Wall hitWall = component as Wall;
 
                 //Call the DamageWall function of the Wall we are hitting.
                 
                 hitWall.DamageWall (wallDamage);
                 animator.SetTrigger("playerChop");
-            }
+            
         }
         if (component as Enemy){
-            if (button.OnMouseUp() == true) {
                 Enemy hitEnemy = component as Enemy;
 
                 hitEnemy.DamageEnemy (enemyDamage);
 
                 animator.SetTrigger("playerChop");
-            }
+            
         }
         if (component as Boss){
-            if (button.OnMouseUp() == true) {
                 Boss hitEnemy = component as Boss;
 
                 hitEnemy.DamageEnemy (enemyDamage);
 
                 animator.SetTrigger("playerChop");
-            }
+            
         }         
     }
 
